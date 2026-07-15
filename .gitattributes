@@ -1,0 +1,4 @@
+# Prevent GitHub from modifying line endings in any file.
+# The HTML files contain base64-encoded compressed bundles — any
+# line-ending conversion corrupts the data and breaks unpacking.
+* -text
