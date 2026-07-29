@@ -345,6 +345,8 @@ body.dark .metrics-grid{background:rgba(0,0,0,.1);border-color:rgba(0,0,0,.12)}
 .metric-card:not(.hero):hover .metric-desc{color:rgba(255,255,255,.8)}
 .metric-card:not(.hero):hover .metric-tag{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#fff}
 .metric-card:not(.hero):hover .metric-tag.warn{background:color-mix(in srgb, var(--warn) 30%, transparent);border-color:var(--warn);color:#fff}
+.metric-card:not(.hero):hover .metric-cite{color:rgba(255,255,255,.65);border-top-color:rgba(255,255,255,.2)}
+.metric-card:not(.hero):hover .metric-cite strong{color:#fff}
 .metric-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--signal);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.4,0,.2,1)}
 .metric-card:hover::before{transform:scaleX(1)}
 .metric-card.hero{grid-column:span 2;grid-row:span 2;background:var(--text);color:#fff;padding:2.4rem 2rem 2rem;display:grid;grid-template-rows:auto auto 1fr;row-gap:.7rem;overflow:hidden}
@@ -1144,7 +1146,7 @@ img,video{max-width:100%;height:auto}
   .nav-cta,.lookup-btn,.btn-primary,.btn-secondary,.cta-submit,.modal-submit,.report-action,.dg-btn{min-height:44px}
 }
 </style>
-  <script src="https://www.google.com/recaptcha/api.js?render=6LfIFGMtAAAAAN_ZMG5DGb8RLIS77VENGeLPk2ua" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lf_AWotAAAAAJ-5POBmpBmvlt_JpUOQ9OUTHfRi" async defer></script>
 </head>
 <body>
 
@@ -3646,8 +3648,8 @@ let _HUB_DOMAINS = {}, _HUB_DOMAIN_LIST = [], _HUB_LOADED = false;
 //
 // CONFIGURATION — set these before deploying:
 
-const GAS_ENDPOINT  = 'https://script.google.com/macros/s/AKfycbz33_JyZxr4bml_tAeSkSv-xe3kjLv1dqg001joZ1dNWU8QdDSol-Yeu89aGJvwDy_-/exec';
-var RECAPTCHA_SITE_KEY = '6LfIFGMtAAAAAN_ZMG5DGb8RLIS77VENGeLPk2ua'; // Get from console.cloud.google.com/security/recaptcha
+const GAS_ENDPOINT  = 'https://script.google.com/macros/s/AKfycbxIQ0Wztn0X78ocg_goclnRPrAh-Q1V1gPpLsIub9WKIMyMG-7np0YISsKRYqYaf3Al2g/exec';
+var RECAPTCHA_SITE_KEY = '6Lf_AWotAAAAAJ-5POBmpBmvlt_JpUOQ9OUTHfRi'; // Get from console.cloud.google.com/security/recaptcha
 const HUB_PAGE_URL  = 'hub.html';          // relative or absolute URL of hub.html
 const ADMIN_DOMAIN  = 'sureshield.ai';
 
@@ -3960,6 +3962,11 @@ function handleGasFormSubmit(e) {
         setFormBusy(form, false);
         if (err) {
           showFormError(form, 'Something went wrong. Please try again.');
+          return;
+        }
+        // GAS returned ok:false — carrier not in dataset, domain mismatch, etc.
+        if (res && res.ok === false) {
+          showFormError(form, res.message || 'Your request could not be processed. Please check your details and try again.');
           return;
         }
         // Duplicate: same email + carrier already on file — show soft info, don't close modal
@@ -4630,7 +4637,7 @@ body{font-family:'Geist',sans-serif;background:#f1ece0;color:#0a0a0a;min-height:
   <!-- ===== 01 · COMPOSITE SCORE VS INDUSTRY ===== -->
   <section id="sec-01" style="padding: 2.75rem 3rem; border-bottom: 1px solid #c9bfa6; scroll-margin-top: 1.5rem;">
     <div style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #3a3326; margin-bottom: 1rem;"><b style="color: #d62524; font-weight: 700;">01</b> · Where You Stand Compared To The Rest Of The Industry</div>
-    <h2 style="font-family: 'Geist', sans-serif; font-weight: 800; font-size: 2.5rem; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; color: #0a0a0a; text-wrap: balance;">Your score is <em style="font-style: italic; color: #d62524;">0.7000000000000028 points above</em> the industry average.</h2>
+    <h2 style="font-family: 'Geist', sans-serif; font-weight: 800; font-size: 2.5rem; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; color: #0a0a0a; text-wrap: balance;">Your score is <em style="font-style: italic; color: #d62524;">0.7 points above</em> the industry average.</h2>
     <p style="font-size: 1.0625rem; line-height: 1.6; color: #0a0a0a; max-width: 740px; opacity: 0.88; margin-bottom: 1.5rem;">Your composite cyber risk score is 67 out of 100, where 0 is minimal exposure and 100 is critical. The industry mean is 66.3 and the median is 78.5. You sit above both, and the 75th-percentile line that defines the most-exposed quarter of the sector is only 23 points away.</p>
 
     <div style="background: #e8e1d1; padding: 2rem; margin: 2rem 0;">
